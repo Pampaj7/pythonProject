@@ -47,6 +47,24 @@ class BinaryTree:
     def getRootVal(self):
         return self.key
 
+    def Es2RicercaRicorsiva(self, value):
+        found = False
+
+        if value == self.key:
+            found = True
+            return found
+        else:
+            self.Es2RicercaRicorsiva(self.leftChild)
+            self.Es2RicercaRicorsiva(self.rightChild)  # correggere da far stoppare
+
+    def Es3SizeRicorsiva(self):
+        count = 1
+        if self.leftChild:
+            count += self.leftChild.Es3SizeRicorsiva()
+        if self.rightChild:
+            count += self.rightChild.Es3SizeRicorsiva()
+        return count
+
 
 def preorder(tree):
     if tree:
@@ -78,3 +96,4 @@ r.insertLeft('y')
 preorder(r)
 postorder(r)
 inorder(r)
+print(r.Es3SizeRicorsiva())  # output: 5
