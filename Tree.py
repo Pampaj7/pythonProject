@@ -7,10 +7,9 @@ import random
 # This is a sample Python script.
 import random
 
+
 # Press Maiusc+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-import numpy as np
 
 
 class BinaryTree:
@@ -66,11 +65,57 @@ class BinaryTree:
         return count
 
 
-def preorder(tree):
+def iterativePreorder(root):
+    if not root:
+        return []
+    stack = [root]
+    result = []
+    while stack:
+        node = stack.pop()
+        result.append(node.key)
+        if node.rightChild:
+            stack.append(node.rightChild)
+        if node.leftChild:
+            stack.append(node.leftChild)
+    return result
+
+
+def iterativeInorder(tree):
+    if not tree:
+        return []
+    stack = []
+    result = []
+    current = tree
+    while True:
+        if current:
+            stack.append(current)
+            current = current.leftChild
+        elif stack:
+            current = stack.pop()
+            result.append(current.key)
+            current = current.rightChild
+        else:
+            break
+
+    return result
+
+
+def iterativePostOrder(tree):
+    stack = []
+    result = []
     if tree:
-        print(tree.getRootVal())
-        preorder(tree.getLeftChild())
-        preorder(tree.getRightChild())
+        stack.append(tree)
+
+    while stack:
+        node = stack.pop()
+        result.append(node.key)
+
+        if node.leftChild:
+            stack.append(node.leftChild)
+        if node.rightChild:
+            stack.append(node.rightChild)
+
+    return result[::-1]
 
 
 def postorder(tree):
@@ -80,6 +125,13 @@ def postorder(tree):
         print(tree.getRootVal())
 
 
+def preorder(tree):
+    if tree:
+        print(tree.getRootVal())
+        preorder(tree.getLeftChild())
+        preorder(tree.getRightChild())
+
+
 def inorder(tree):
     if tree is not None:
         inorder(tree.getLeftChild())
@@ -87,13 +139,39 @@ def inorder(tree):
         inorder(tree.getRightChild())
 
 
+def height(tree):
+    if tree is None:
+        return 0
+    return 1 + max(height(tree.getLeftChild()), height(tree.getRightChild()))
+
+
+def es8Function(tree):
+    if height(tree) > 1:
+        print(tree.key)
+    if tree is not None:
+        es8Function(tree.getLeftChild())
+        es8Function(tree.getRightChild())
+
+
+def es9Function(tree):
+    if not tree:
+        return []
+    stack = [tree]
+    result = []
+    while stack:
+        node = stack.pop()
+        result.append(node.key)
+        if node.rightChild and height(node.rightChild) > 2:
+            stack.append(node.rightChild)
+        if node.leftChild and height(node.leftChild) > 2:
+            stack.append(node.leftChild)
+    return result
+
+
 r = BinaryTree('a')
 r.insertLeft('b')
 r.insertRight('c')
-r.insertLeft('x')
-r.insertLeft('y')
-
-preorder(r)
-postorder(r)
-inorder(r)
-print(r.Es3SizeRicorsiva())  # output: 5
+r.insertLeft('d')
+r.insertLeft('e')
+r.getLeftChild().insertRight('f')
+print(es9Function(r))
