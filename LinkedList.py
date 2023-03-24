@@ -52,7 +52,7 @@ class LinkedList:
                 tmp = tmp.getNext()
         return found
 
-    def remove(self, item):
+    def remove(self, item):  # TODO fa cacare non funziona rifallo
         found = False
         tmp = self.head
         previous = None
@@ -67,7 +67,7 @@ class LinkedList:
             else:
                 previous.setNext(tmp.getNext())
 
-    def Es1ReversePrint(self): #si occhio che qui si va all'incontrario
+    def Es1ReversePrint(self):  # si occhio che qui si va all'incontrario
         tmp = self.head
         arr = []
         while tmp is not None:
@@ -76,6 +76,14 @@ class LinkedList:
 
         for i in reversed(arr):
             print(i)
+
+    def ES1Prof(self, list):
+        if list:
+            self.ES1Prof(list.getNext())
+            print(list.head.getData())
+
+
+
 
 
 myList = LinkedList()

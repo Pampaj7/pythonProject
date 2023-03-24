@@ -11,8 +11,29 @@ import random
 # Press Maiusc+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
+def CrazyTree(r):
+    return [r, [], []]
 
-class BinaryTree:
+
+def insertLeft(root, newBranch):
+    t = root.pop(1)  # toglie figlio sinistro
+    if len(t) > 1:
+        root.insert(1, [newBranch, t, []])  # ricordiamo che fa lo shift di tutto
+    else:
+        root.insert(1, [newBranch, [], []])
+    return root
+
+
+def insertRight(root, newBranch):
+    t = root.pop(2)
+    if len(t) > 1:
+        root.insert(2, [newBranch, [], t])
+    else:
+        root.insert(2, [newBranch, [], []])
+    return root
+
+
+class BinaryTree:  # classe ricorsiva per questo si usano tutte le volte i cost
     def __init__(self, rootObj):
         self.key = rootObj
         self.leftChild = None
@@ -46,15 +67,15 @@ class BinaryTree:
     def getRootVal(self):
         return self.key
 
-    def Es2RicercaRicorsiva(self, value):
+    def Es2RicercaRicorsiva(self, tree, value):
         found = False
-
         if value == self.key:
             found = True
             return found
-        else:
-            self.Es2RicercaRicorsiva(self.leftChild)
-            self.Es2RicercaRicorsiva(self.rightChild)  # correggere da far stoppare
+        elif tree.getLeftChild() is not None:
+            a = self.Es2RicercaRicorsiva(self.leftChild)
+        elif tree.getRightChild() is not None:
+            a = self.Es2RicercaRicorsiva(self.rightChild)  # correggere da far stoppare
 
     def Es3SizeRicorsiva(self):
         count = 1
