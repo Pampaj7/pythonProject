@@ -216,10 +216,46 @@ def livello(tree, x):
     return -1
 
 
+def treeSum(tree):
+    if tree is None:
+        return 0
+    else:
+        leftSum = treeSum(tree.getLeftChild())
+        rightSum = treeSum(tree.getRightChild())
+        return tree.getRootVal() + leftSum + rightSum
+
+
+def treeMax(tree):
+    if tree is None:
+        return float("-inf")
+    else:
+        leftMax = treeMax(tree.getLeftChild())
+        rightMax = treeMax(tree.getRightChild())
+        return max(tree.data, leftMax, rightMax)
+
+
+def heighV(tree):
+    if tree is None:
+        return 0
+    else:
+        leftHeight = heighV(tree.getLeftChild())
+        rightHeight = heighV(tree.getRightChild())
+        return 1 + max(leftHeight, rightHeight)
+
+
+def existsInTree(tree, value):
+    if tree is None:
+        return False
+    else:
+        inLeft = existsInTree(tree.leftChild, value)
+        inRight = existsInTree(tree.rightChild, value)
+        return tree.getRootVal() == value or inLeft or inRight
+
+
 r = BinaryTree('a')
 r.insertLeft('b')
 r.insertRight('c')
 r.insertLeft('d')
 r.insertLeft('e')
 r.getLeftChild().insertRight('f')
-print(es9Function(r))
+print(existsInTree(r, 'a'))
