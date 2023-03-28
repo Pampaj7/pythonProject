@@ -67,23 +67,11 @@ class BinaryTree:  # classe ricorsiva per questo si usano tutte le volte i cost
     def getRootVal(self):
         return self.key
 
-    def Es2RicercaRicorsiva(self, tree, value):
-        found = False
-        if value == self.key:
-            found = True
-            return found
-        elif tree.getLeftChild() is not None:
-            a = self.Es2RicercaRicorsiva(self.leftChild)
-        elif tree.getRightChild() is not None:
-            a = self.Es2RicercaRicorsiva(self.rightChild)  # correggere da far stoppare
 
-    def Es3SizeRicorsiva(self):
-        count = 1
-        if self.leftChild:
-            count += self.leftChild.Es3SizeRicorsiva()
-        if self.rightChild:
-            count += self.rightChild.Es3SizeRicorsiva()
-        return count
+def Es3SizeRicorsiva(tree):
+    if tree is None:
+        return 0
+    return 1 + Es3SizeRicorsiva(tree.getLeftChild() + Es3SizeRicorsiva(tree.getRightChild()))
 
 
 def iterativePreorder(root):
@@ -160,21 +148,38 @@ def inorder(tree):
         inorder(tree.getRightChild())
 
 
-def height(tree):
+def height7(tree):
     if tree is None:
         return 0
-    return 1 + max(height(tree.getLeftChild()), height(tree.getRightChild()))
+    return 1 + max(height7(tree.getLeftChild()), height7(tree.getRightChild()))
 
 
-def es8Function(tree):
-    if height(tree) > 1:
+def Es2RicercaRicorsiva(tree, value):
+    if tree is None:
+        return False
+    if value == tree.key:
+        return True
+    Es2RicercaRicorsiva(tree.getLeftChild(), value) or Es2RicercaRicorsiva(tree.getRightChild(), value)
+
+
+def es8Function(tree):  # non è lineare
+    if height7(tree) > 1:
         print(tree.key)
     if tree is not None:
         es8Function(tree.getLeftChild())
         es8Function(tree.getRightChild())
 
 
-def es9Function(tree):
+def es8FuncLine(tree):
+    if tree is None:
+        return 0
+    temp = 1 + max(height7(tree.getLeftChild()), height7(tree.getRightChild()))
+    if temp > 6:
+        print(tree.key)
+    return temp
+
+
+def es9Function(tree):  # ?
     if not tree:
         return []
     stack = [tree]
@@ -182,11 +187,33 @@ def es9Function(tree):
     while stack:
         node = stack.pop()
         result.append(node.key)
-        if node.rightChild and height(node.rightChild) > 2:
+        if node.rightChild and height7(node.rightChild) > 2:
             stack.append(node.rightChild)
-        if node.leftChild and height(node.leftChild) > 2:
+        if node.leftChild and height7(node.leftChild) > 2:
             stack.append(node.leftChild)
     return result
+
+
+def ES9Prof(tree, originalTree):  # non lin
+    if es8FuncLine(tree) == livello(originalTree, tree.key):
+        print(tree.key)
+    ES9Prof(tree.getLeftChild(), originalTree)
+    ES9Prof(tree.getRightChild(), originalTree)
+
+
+def livello(tree, x):
+    # restituisce il livello di x nell'albero tree, -1 altrimneti
+    if tree is None:
+        return -1
+    temp = livello(tree.getLeftChild(), x)
+    if tree.key is x:
+        return 0
+    if temp != -1:
+        return 1 + temp
+    temp = livello(tree.getRightChild(), x)
+    if temp != 1:
+        return 1 + temp
+    return -1
 
 
 r = BinaryTree('a')

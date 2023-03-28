@@ -74,16 +74,13 @@ class LinkedList:
             arr.append(tmp.getData())
             tmp = tmp.getNext()
 
-        for i in reversed(arr):
+        for i in reversed(arr):  # va bene
             print(i)
 
     def ES1Prof(self, list):
         if list:
             self.ES1Prof(list.getNext())
             print(list.head.getData())
-
-
-
 
 
 myList = LinkedList()
