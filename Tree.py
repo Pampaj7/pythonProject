@@ -201,19 +201,16 @@ def ES9Prof(tree, originalTree):  # non lin
     ES9Prof(tree.getRightChild(), originalTree)
 
 
-def livello(tree, x):
-    # restituisce il livello di x nell'albero tree, -1 altrimneti
+def livelloAux(tree, count):  # by prof corretto
     if tree is None:
-        return -1
-    temp = livello(tree.getLeftChild(), x)
-    if tree.key is x:
-        return 0
-    if temp != -1:
-        return 1 + temp
-    temp = livello(tree.getRightChild(), x)
-    if temp != 1:
-        return 1 + temp
-    return -1
+        return
+    print(tree.key, count)
+    livelloAux(tree.leftChild, count + 1)
+    livelloAux(tree.rightChild, count + 1)
+
+
+def livello(tree):
+    livelloAux(tree, 0)
 
 
 def treeSum(tree):
@@ -250,6 +247,23 @@ def existsInTree(tree, value):
         inLeft = existsInTree(tree.leftChild, value)
         inRight = existsInTree(tree.rightChild, value)
         return tree.getRootVal() == value or inLeft or inRight
+
+
+# TODO es foto in classe se arrivo da sopra aggiungo un paramentro, se vengo da sotto uso return!!!
+
+def altezzaClasse(tree, count):
+    if tree.leftChild is None and tree.rightChild is None:
+        return 0
+    alt1 = 0
+    alt2 = 0
+    if tree.leftChild is not None:
+        alt1 = altezzaClasse(tree.leftChild, count + 1)
+    if tree.rightChild is not None:
+        alt2 = altezzaClasse(tree.rightChild, count + 1)
+    temp3 = max(alt1, alt2)
+    if temp3 == count:
+        print(tree.key)
+    return temp3
 
 
 r = BinaryTree('a')
