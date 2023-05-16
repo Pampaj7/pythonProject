@@ -12,7 +12,7 @@ def cassiere_alg(r, c):  # c sarà una lista
         if r == 0:
             print("la soluzione è: " + str(s))
         if not c:  # se le taglie fossere precise stamperebbe questo
-            print("Non è possibile trovare la soluzione")
+            print("Non è possibile trovare la soluzione") # orcodeddio
             break
 
 
